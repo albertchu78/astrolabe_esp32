@@ -7,7 +7,7 @@
 esp_lcd_rgb_panel_config_t panel_config_single = {
     .clk_src = LCD_CLK_SRC_DEFAULT,
     .timings = {
-        .pclk_hz = 8400000L,
+        .pclk_hz = 9600000L,
         .h_res = 720,
         .v_res = 720,
         .hsync_pulse_width = 2,
