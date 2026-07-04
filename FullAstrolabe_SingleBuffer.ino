@@ -118,7 +118,7 @@ Tympanum* tympanum;
 const int horizon_thickness = 4;
 const int default_thickness = 1;
 std::array<float, n_houses>cusps;
-float latitude = 10.0; //insert your own default latitude
+float latitude = 0.1; //insert your own default latitude
 float longitude = 0.0; //insert your own default longitude
 
 //display
@@ -137,6 +137,8 @@ long timer_eph;
 long timer_eph_sample;
 long timer_interface_update;
 long timer_draw;
+long timer_button_debounce;
+long current_time;
 
 volatile bool encoder_irq;
 volatile bool button_irq;
@@ -544,6 +546,7 @@ void setup() {
   timer = millis();
   timer_eph_sample = millis();
   timer_interface_update = millis();
+  timer_button_debounce = millis();
 
   expander.begin();
   expander.initHD40015C40();
@@ -568,6 +571,7 @@ void setup() {
 }
 
 void loop() {
+  current_time = millis();
   date_changed = false;
   angle_changed = false;
 
@@ -591,8 +595,11 @@ void loop() {
   }
 
   if (button_irq) {
-    button_irq = false;
-    interface->serviceButton();
+    if (current_time > timer_button_debounce + 200) {
+      button_irq = false;
+      interface->serviceButton();
+      timer_button_debounce = current_time;
+    }
   }
 
   sum_pot = 0;
@@ -617,7 +624,7 @@ void loop() {
 
   if (loop_entry_counter > 0) loop_entry_counter--;
 
-  if (millis() > timer_eph_sample + 50) {
+  if (current_time > timer_eph_sample + 50) {
     old_jd_back = jd;
     jd = time_calculator->getJulianDate(angle);
     if (abs(old_eph_angle - angle) > 0.06 || (!angle_changed && angle_changed_eph_old)) {
@@ -635,8 +642,6 @@ void loop() {
       date_change_eph_request = false;
     }
     ri = getRetrogradeInfo(jd, old_jd_front, data, old_data);
-    timer_eph_sample = millis();
-
     for (i = 0; i < 19; i ++) {
       switch(i) {
         case 0:
@@ -664,15 +669,16 @@ void loop() {
           stars_altaz[i-7] = getAltAz(angle, fixed_star_data[i-7], latitude);
           break;
       }
+      timer_eph_sample = current_time;
     }
   }
 
-  if (millis() > timer_interface_update + 501) {
+  if (current_time > timer_interface_update + 501) {
     dt = time_calculator->getDateTime(jd);
     cusps = tympanum->getHouseCusps(angle);
     InterfaceParams p = { .dt = dt, .pd = data, .cusps = cusps, .ri = ri, .planets_altaz = planets_altaz, .stars_altaz = stars_altaz};
     interface->process(p);
-    timer_interface_update = millis();
+    timer_interface_update = current_time;
   }
 
   if (frame_change_counter > 0) {
