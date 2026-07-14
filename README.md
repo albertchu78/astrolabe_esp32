@@ -40,6 +40,7 @@ I used the following components in this build:
 | [5/16'' Ø Delrin Balls](https://www.mcmaster.com/products/9614k57/) | 12
 | [0.06'' Ø 1/8'' Thick Neodymium Magnets](https://www.mcmaster.com/catalog/5862K11) | 16
 | [4-40 1/4'' Set Screws](https://www.mcmaster.com/products/92311a106/) | 4
+| 110 Ohm, 0.25 W Resistor | 1
 
 Where possible, I'm linking to the exact component I purchased. Substitutions can be made as needed.
 
@@ -76,10 +77,11 @@ Before beginning assembly, all the soldering work should be complete. The solder
 
   1. Solder the character display backpack to the character display. Note: the screw terminal on the backpack needs to be removed, as it doesn't fit in the build. This can be done via a skillful, dextrous desoldering job, or you can use a pair of pliers to rip the screw terminal off the PCB. Guess which path I took.
   2. Solder the 3-pin JST PH cable to the prongs of the potentiometer. On the Qualia's 3-pin JST connector, the left pin is signal, the middle pin is power, and the right pin is ground. Connect signal to potentiometer pin 2, power to potentiometer pin 1, and ground to potentiometer pin 3.
-  3. Solder one half of the 2-pin JST connector pair to the Qualia board. Solder one wire to MOSI and the other to MISO. We are repurposing these extra GPIO pins for interrupt signals.
-  4. Solder the other half of the 2-pin connector pair to the interrupt pins of the encoder breakout and the GPIO expander. Connect MOSI to the encoder interrupt pin and MISO to the expander interrupt pin.
-  5. For both buttons, solder one half of a 6-pin JST connector to the button. Each button comes with six prongs: an anode, two button contacts, and three LED cathodes.
-  6. Solder the other half of the two 6-pin connectors to the GPIO expander. For the button-expander connections, solder the anode to power, the three LED cathodes to GPIO pins, one of the button contacts to ground, and the other button contact to a GPIO pin. All eight of the GPIO expander's pins should be occupied. The existing code uses the following pin assignments: 
+  3. Cut the power wire and splice the 110 Ohm resistor into it. The ESP32-S3 onboard ADC has a completely flat response at the top of its voltage input range, so we need the resistor to adjust the input signal.
+  4. Solder one half of the 2-pin JST connector pair to the Qualia board. Solder one wire to MOSI and the other to MISO. We are repurposing these extra GPIO pins for interrupt signals.
+  5. Solder the other half of the 2-pin connector pair to the interrupt pins of the encoder breakout and the GPIO expander. Connect MOSI to the encoder interrupt pin and MISO to the expander interrupt pin.
+  6. For both buttons, solder one half of a 6-pin JST connector to the button. Each button comes with six prongs: an anode, two button contacts, and three LED cathodes.
+  7. Solder the other half of the two 6-pin connectors to the GPIO expander. For the button-expander connections, solder the anode to power, the three LED cathodes to GPIO pins, one of the button contacts to ground, and the other button contact to a GPIO pin. All eight of the GPIO expander's pins should be occupied. The existing code uses the following pin assignments: 
 
       ~~~
       #define RIGHT_BLUE 0 
