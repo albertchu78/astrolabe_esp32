@@ -1205,6 +1205,7 @@ void AstrolabeInterface::serviceButton() {
             state = CALIBRATION;
             needs_initialize = true;
         }
+        return;
     }
     if (! pcf->digitalRead(RIGHT_BUTTON)) {
         if (state >= INFO_SUN && state <= INFO_SATURN) {
