@@ -41,33 +41,33 @@ const char* planet_names[7] = {
     " SATURN  "};
 
 const char* star_names[12] = {
-    "       ALGOL        ",
-    "       RIGEL        ",
-    "      CAPELLA       ",
-    "     BETELGEUSE     ",
-    "       SIRIUS       ",
-    "      PROCYON       ",
-    "       DUBHE        ",
-    "       ALKAID       ",
-    "      ARCTURUS      ",
-    "        VEGA        ",
-    "       ALTAIR       ",
-    "       DENEB        "
+    "       ALGOL",
+    "       RIGEL",
+    "      CAPELLA",
+    "     BETELGEUSE",
+    "       SIRIUS",
+    "      PROCYON",
+    "       DUBHE",
+    "       ALKAID",
+    "      ARCTURUS",
+    "        VEGA",
+    "       ALTAIR",
+    "        DENEB"
 };
 
 const char* star_descriptions[12] = {
-    "  THE DEMON'S HEAD  ",
-    " THE HUNTER'S FOOT  ",
-    "    THE SHE-GOAT    ",
-    " THE HUNTER'S HAND  ",
-    "  THE SEARING ONE   ",
-    "   THE LITTLE DOG   ",
-    "  THE BEAR'S HEAD   ",
-    "  THE BEAR'S TAIL   ",
-    "    THE GUARDIAN    ",
-    "  THE DIVING EAGLE  ",
-    " THE SOARING EAGLE  ",
-    "      THE SWAN      "
+    "  THE DEMON'S HEAD",
+    " THE HUNTER'S FOOT",
+    "    THE SHE-GOAT",
+    " THE HUNTER'S HAND",
+    "  THE SEARING ONE",
+    "   THE LITTLE DOG",
+    "  THE BEAR'S HEAD",
+    "  THE BEAR'S TAIL",
+    "    THE GUARDIAN",
+    "  THE DIVING EAGLE",
+    " THE SOARING EAGLE",
+    "      THE SWAN"
 };
 
 const int max_blink_counter = 1;
